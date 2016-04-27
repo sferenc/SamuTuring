@@ -58,6 +58,7 @@
 #include <fstream>
 #include <cstring>
 #include <algorithm>
+#include <tuple>
 
 #include "orchmach1.hpp"
 
@@ -1169,8 +1170,30 @@ public:
             return t1.second > t2.second;
         }
         );*/
-	//Truple***********************************************************************************************************************
+//std::map<ReinforcedAction, int>::iterator iterator = rules.begin() ; iterator != rules.end(); ++iterator
+//Truple*********************************************************************************************************
 	std::string printSortedRules() {
+
+        std::vector<std::tuple<int, int, int> > tmp;//std::pair kiterjesztése
+
+        for (std::map<ReinforcedAction, int>::iterator iterator = rules.begin() ; iterator != rules.end(); ++iterator ) {//auto& rule : rules 
+            std::tuple<int, int, int> p;// {{rule.first.first, rule.first.second}, rule.second};
+	    //get-el indexelünk
+	    std::get<0>(p)= iterator->first.first;
+	    std::get<1>(p)= iterator->first.second;
+	    std::get<2>(p)= iterator->second;
+            tmp.push_back ( p );
+        }
+
+        std::sort (
+            std::begin ( tmp ), std::end ( tmp ),
+        [=] ( std::tuple<int, int, int>& t1, std::tuple<int, int, int>& t2 ) {
+            return std::get<2>(t1) < std::get<2>(t2);
+        }
+        );
+
+//********************************************************************
+/*std::string printSortedRules() {
 
         std::vector<std::tuple<int, int, int> > tmp;//std::pair kiterjesztése
 
@@ -1188,18 +1211,18 @@ public:
         [=] ( auto&& t1, auto&& t2 ) {
             return std::get<2>(t1) > std::get<2>(t2);
         }
-        );
-//***************************************************************************************************************************************
+        );*/
+//***************************************************************
         std::stringstream ss;
 
         ss << tmp.size();
 
         for ( auto& rule : tmp ) {
             //ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
-ss << ", " <<rule.first.first <<", "  << rule.first.second;
+	    ss << ", " << std::get<1>(rule) << ", "  << std::get<2>(rule);
 	  
 	}
-        return ss.str();
+        return ss.str();// stringet ad vissza
 
     }
 

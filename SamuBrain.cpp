@@ -897,7 +897,7 @@ std::string SamuBrain::get_foobar ( MORGAN samuQl ) const
 
   auto foobar = std::find_if (
                   std::begin ( m_brain ), std::end ( m_brain ),
-                  [=] ( auto&& mpu )
+                  [=] ( std::pair<std::string, MORGAN>&& mpu )
   {
     return ( mpu.second ) == samuQl;
   }

@@ -7,7 +7,7 @@ DEFINES += LIFEOFGAME
 DEFINES += Q_LOOKUP_TABLE
 
 QT += widgets core
-CONFIG += c++14
+CONFIG += c++11
 QMAKE_CXXFLAGS += -fopenmp
 LIBS += -fopenmp
 
